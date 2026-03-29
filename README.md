@@ -1,35 +1,108 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/jYmqdKSO)
 # 📌 Autoencoder with MNIST Dataset
 
-This project demonstrates how to build, train, and use an **autoencoder** for the **MNIST handwritten digit dataset**. It includes visualization of digits, dimensionality reduction, and an image retrieval based on **cosine similarity**.
+## 🚀 Project Overview
+This project implements an Autoencoder neural network using the MNIST dataset to perform:
+
+- Image reconstruction  
+- Latent feature learning  
+- Dimensionality reduction (visualization)  
+- Image retrieval using cosine similarity  
+
+The model learns a compressed representation of handwritten digits and uses it for similarity-based search.
 
 ---
 
-## 🚀 Project Overview
+## 📊 Dataset
+- Source: OpenML (mnist_784)  
+- Total Samples: 70,000 images  
+- Image Size: 28 × 28 (flattened to 784 features)  
+- Classes: Digits (0–9)  
+- Type: Grayscale  
 
-1. **Data Loading**:
+---
 
-   * The MNIST dataset (`mnist_784`) is fetched using `fetch_openml`.
-   * It contains 70,000 grayscale images of handwritten digits (0–9).
-   * Each image is represented as a **28×28** pixel grid (flattened to 784 features).
+## 🧠 Model Architecture
 
-2. **Autoencoder Architecture**:
+### Encoder
+- Input: 784 features  
+- Dense layers: 128 → 64 → 32  
+- Output: Latent vector (compressed representation)
 
-   * **Encoder**: Compresses 784-dimensional input into an n-dimensional latent representation.
-   * **Decoder**: Reconstructs the original 784-dimensional image from the latent space.
-   * **Loss Function**
-   * **Optimizer**
+### Decoder
+- Dense layers: 32 → 64 → 128 → 784  
+- Output: Reconstructed image  
 
-3. **Training**:
+---
 
-   * The autoencoder is trained to reconstruct the input images.
+## ⚙️ Training Setup
+- Loss Function: Mean Squared Error (MSE)  
+- Optimizer: Adam  
+- Epochs: 20  
+- Batch Size: 256  
 
-4. **Dimensionality Reduction & Visualization**:
+### Training Objective
+The model is trained to reconstruct the input:
+Input = Output (unsupervised learning)
 
-   * Encoded representations of test images are further reduced to 2D.
+---
 
-5. **Image Retrieval**:
+## 📉 Results
 
-   * A sample image is encoded into the latent space using the encoder only.
-   * Cosine similarity is used to compare it against the training set.
-   * The top-5 most similar images are retrieved and displayed.
+### Reconstruction
+- The model successfully reconstructs handwritten digits  
+- Outputs are slightly blurred (expected due to compression)  
+
+### Latent Space Learning
+- The encoder captures meaningful features  
+- Similar digits produce similar latent vectors  
+
+---
+
+## 📊 Dimensionality Reduction
+- Latent vectors (32D) are reduced to 2D using PCA  
+- Visualization shows clustering of similar digits  
+
+Insight:
+Digits with similar shapes (e.g., 3 and 5) appear closer in latent space  
+
+---
+
+## 🔎 Image Retrieval System
+
+### Method
+1. Encode query image into latent space  
+2. Encode training dataset  
+3. Compute cosine similarity  
+4. Retrieve top-5 most similar images  
+
+### Key Idea
+Similarity is based on learned features, not raw pixels  
+
+---
+
+## 🛠️ Technologies Used
+- Python  
+- TensorFlow / Keras  
+- Scikit-learn  
+- NumPy  
+- Matplotlib  
+
+---
+
+## 📁 Project Structure
+```text
+autoencoder-mnist/
+│
+├── autoencoder_task.ipynb
+├── README.md
+```
+---
+
+## ▶️ How to Run
+1. Open the notebook:
+```text
+autoencoder_task.ipynb
+```
+### Cosine Similarity
+- Measures similarity between vectors  
+- Used for retrieval  
